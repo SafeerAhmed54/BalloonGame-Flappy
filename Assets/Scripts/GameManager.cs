@@ -38,6 +38,10 @@ public class GameManager : MonoBehaviour
             panel.SetActive(true);
             scoreText.text = "Points: " + player.scoreText.text;
         }
+        if (player == null)
+        {
+            player = FindObjectOfType<PlayerMove>();
+        }
         ShakeAnimation();
     }
     public void PlayGame()

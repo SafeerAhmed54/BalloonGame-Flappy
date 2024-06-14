@@ -8,15 +8,17 @@ public class SpawnManager : MonoBehaviour
     public Vector3 spawnTransform;     // Base position for spawning
     public float startDelay = 1f;      // Initial delay before the first spawn
     public float spawnDelay = 2f;      // Delay between subsequent spawns
-    private GameManager gameManager;   // GameManager 
+
+    [SerializeField] private GameManager gameManager;   // GameManager 
+    [SerializeField] private PlayerMove player;
 
     void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
-
         // Repeatedly invoke the SpawnCube method starting after startDelay, then every spawnDelay seconds
         InvokeRepeating("SpawnCube", startDelay, spawnDelay);
     }
+
     void SpawnCube()
     {
         // Get a random Y position within the specified range
