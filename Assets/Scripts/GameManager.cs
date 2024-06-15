@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         if (player != null && player.gameOver)
         {
             panel.SetActive(true);
-            scoreText.text = "Points: " + player.scoreText.text;
+            scoreText.text = player.scoreText.text;
         }
         if (player == null)
         {

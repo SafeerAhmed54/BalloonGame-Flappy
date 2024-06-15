@@ -10,16 +10,19 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Rigidbody playerRb;
     [SerializeField] private float boundX = 4.5f;
     [SerializeField] private int score;
+    [SerializeField] private AudioManager audioManager;
 
     public bool gameOver = false;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
 
     [SerializeField] private string highScoreKey = "HighScore";
+    [SerializeField] private List<AudioClip> clip;
 
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        audioManager = FindAnyObjectByType<AudioManager>();   
         highscoreText.text = "HighScore : " + PlayerPrefs.GetInt(highScoreKey).ToString();
     }
 
@@ -34,6 +37,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) 
         { 
             playerRb.AddForce(Vector3.up, ForceMode.Impulse);
+            audioManager.PlayAudioClip(clip[0]);
         }
     }
 
@@ -50,6 +54,7 @@ public class PlayerMove : MonoBehaviour
         if (other.CompareTag("Barrier"))
         {
             gameOver = true;
+            audioManager.PlayAudioClip(clip[1]);
         }
         else if (other.CompareTag("Points"))
         {

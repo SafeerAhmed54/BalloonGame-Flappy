@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     public float spawnDelay = 2f;      // Delay between subsequent spawns
 
     [SerializeField] private GameManager gameManager;   // GameManager 
-    [SerializeField] private PlayerMove player;
+    //[SerializeField] private PlayerMove player;
 
     void Start()
     {
