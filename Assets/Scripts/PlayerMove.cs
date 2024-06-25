@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
 using DG.Tweening.Core.Easing;
+using DG.Tweening;
+using UnityEditor.EventSystems;
+using UnityEngine.Events;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -19,11 +22,14 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private string highScoreKey = "HighScore";
     [SerializeField] private List<AudioClip> clip;
 
+    public UnityEvent unityEvent;
+
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         audioManager = FindAnyObjectByType<AudioManager>();   
         highscoreText.text = "HighScore : " + PlayerPrefs.GetInt(highScoreKey).ToString();
+        unityEvent.Invoke();
     }
 
     private void Update()
@@ -55,17 +61,20 @@ public class PlayerMove : MonoBehaviour
         {
             gameOver = true;
             audioManager.PlayAudioClip(clip[1]);
+
         }
         else if (other.CompareTag("Points"))
         {
             score++;
             scoreText.text = "Points : " + score.ToString();
+            scoreText.transform.DOShakePosition(1,10,10,90,false,true);
             
             if (PlayerPrefs.GetInt(highScoreKey) <= score)
             {
                 PlayerPrefs.SetInt(highScoreKey, score);
                 PlayerPrefs.Save();
-                highscoreText.text = "HighScore : " + PlayerPrefs.GetInt(highScoreKey).ToString(); 
+                highscoreText.text = "HighScore : " + PlayerPrefs.GetInt(highScoreKey).ToString();
+                highscoreText.transform.DOShakePosition(1, 10, 10, 90, false, true);
             }
 
             Debug.Log("Point is " + score);

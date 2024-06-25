@@ -3,12 +3,14 @@ using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CubeMoveScript : MonoBehaviour
 {
-    public float speed = 5f;  // Default speed, can be adjusted in the Inspector
-    private Rigidbody cubeRb;
-    private Animator cubeAni;
+    [SerializeField] public float speed = 5f;  // Default speed, can be adjusted in the Inspector
+    [SerializeField] private Rigidbody cubeRb;
+    [SerializeField] private Animator cubeAni;
+    [SerializeField] private GameObject cubeObj;
     //[SerializeField] private Animation cubeAni;
     [SerializeField] private PlayerMove player;
 
@@ -18,6 +20,7 @@ public class CubeMoveScript : MonoBehaviour
         cubeRb = GetComponent<Rigidbody>();
         cubeAni = GetComponent<Animator>();
         player = FindAnyObjectByType<PlayerMove>();
+        cubeObj = transform.GetChild(0).gameObject;
 
     }
 
@@ -48,7 +51,11 @@ public class CubeMoveScript : MonoBehaviour
         {
             /*Transform startPosChild = gameObject.GetComponentInChildren<Transform>();
             Transform startPos = gameObject.GetComponent<Transform>();*/
-            cubeAni.Play("BlockOut");
+            Vector3 posEnd1 = new Vector3(0,100,0);
+            Vector3 posEnd2 = new Vector3(0, -100, 0);
+            transform.DOLocalMove(posEnd1, 30, false);
+            cubeObj.transform.DOLocalMove(posEnd2, 30, false);
+            //cubeAni.Play("BlockOut");
         }
     }
 }

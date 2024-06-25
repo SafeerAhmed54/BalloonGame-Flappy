@@ -8,8 +8,10 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerMove player; // Reference to the player script
+    [SerializeField] private string highScoreKey = "HighScore";
     public GameObject panel; // Game over panel
     public TextMeshProUGUI scoreText; // UI element to display the score
+    public TextMeshProUGUI highScoreText;
     public GameObject Button;
     public bool playGame = false;
     public bool fadeOut;
@@ -27,16 +29,17 @@ public class GameManager : MonoBehaviour
             player = FindObjectOfType<PlayerMove>();
         }
 
-        // Hide the game over panel at the start
-        panel.SetActive(false);
+        /*// Hide the game over panel at the start
+        panel.SetActive(false);*/
     }
 
     void Update()
     {
         if (player != null && player.gameOver)
         {
-            panel.SetActive(true);
+            AnimationPanel();
             scoreText.text = player.scoreText.text;
+            highScoreText.text = " HighScore : "+PlayerPrefs.GetInt(highScoreKey).ToString();
         }
         if (player == null)
         {
@@ -60,6 +63,11 @@ public class GameManager : MonoBehaviour
 
     public void ShakeAnimation()
     {
-        Button.transform.DOShakePosition(duration, strength, vibrato, randomness,snapping ,fadeOut, ShakeRandomnessMode.Harmonic);
+        //Button.transform.DOShakePosition(duration, strength, vibrato, randomness,snapping ,fadeOut, ShakeRandomnessMode.Harmonic); 
+    }
+    
+    public void AnimationPanel()
+    {
+        panel.transform.DOScale(3.7489f, 1);
     }
 }
